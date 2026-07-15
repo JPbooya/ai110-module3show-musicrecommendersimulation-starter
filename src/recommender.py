@@ -116,6 +116,7 @@ class Recommender:
         self.songs = songs
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
+        """Scores every song against the user profile and returns the top k."""
         scored = [
             (
                 song,
@@ -131,6 +132,7 @@ class Recommender:
         return [song for song, _ in scored[:k]]
 
     def explain_recommendation(self, user: UserProfile, song: Song) -> str:
+        """Returns a one-sentence explanation of why this song was recommended."""
         _, reasons = _weighted_score(
             song.genre, song.mood, song.energy, song.acousticness,
             user.favorite_genre, user.favorite_mood, user.target_energy,
@@ -144,11 +146,10 @@ def load_songs(csv_path: str) -> List[Dict]:
     Loads songs from a CSV file.
     Required by src/main.py
     """
-    songs = []
     with open(csv_path, newline="") as f:
         reader = csv.DictReader(f)
-        for row in reader:
-            songs.append({
+        return [
+            {
                 "id": int(row["id"]),
                 "title": row["title"],
                 "artist": row["artist"],
@@ -159,8 +160,9 @@ def load_songs(csv_path: str) -> List[Dict]:
                 "valence": float(row["valence"]),
                 "danceability": float(row["danceability"]),
                 "acousticness": float(row["acousticness"]),
-            })
-    return songs
+            }
+            for row in reader
+        ]
 
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     """
