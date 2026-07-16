@@ -33,22 +33,26 @@ class UserProfile:
 # --- Scoring weights (the "point-weighting strategy") ---
 # Must sum to 1.0 so the final score stays on a 0-1 scale.
 #
-# Mood (0.35) outweighs Genre (0.20) because mood describes the emotional
-# state the user wants right now, while genre is a coarser style bucket
-# that can span many moods (e.g. "pop" covers both a happy song and an
-# intense one in this catalog). A mood match is a stronger signal of fit
-# than a genre match.
+# Energy closeness (0.50) is now the dominant signal: it's a continuous
+# value rather than a binary match/no-match, so it contributes gradient
+# across the whole catalog and rewards songs that are merely close, not
+# just exact matches.
 #
-# Energy closeness (0.30) sits almost as high as mood because it's a
-# continuous signal rather than a binary match/no-match, so it contributes
-# gradient across the whole catalog instead of a coin flip.
+# Mood (0.2917) is still weighted above Genre (0.0833) because mood
+# describes the emotional state the user wants right now, while genre is
+# a coarser style bucket that can span many moods (e.g. "pop" covers both
+# a happy song and an intense one in this catalog).
 #
-# Acoustic alignment (0.15) is lightest since it's a secondary style
-# preference rather than a core taste signal.
-WEIGHT_GENRE = 0.20
-WEIGHT_MOOD = 0.35
-WEIGHT_ENERGY = 0.30
-WEIGHT_ACOUSTIC = 0.15
+# Genre (0.0833) is lightest now — a genre match alone barely moves the
+# score, since energy closeness dominates the ranking.
+#
+# Acoustic alignment (0.125) sits between genre and mood, roughly where
+# it was before, as a secondary style preference rather than a core
+# taste signal.
+WEIGHT_GENRE = 0.0833
+WEIGHT_MOOD = 0.2917
+WEIGHT_ENERGY = 0.5
+WEIGHT_ACOUSTIC = 0.125
 
 
 def _weighted_score(

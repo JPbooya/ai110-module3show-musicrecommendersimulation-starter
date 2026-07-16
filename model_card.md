@@ -63,6 +63,8 @@ Prompts:
 
 Where the system struggles or behaves unfairly. 
 
+**Energy dominates over genre and mood.** Genre and mood only score points on an exact match — no match means zero, no partial credit. Energy is different: it always gives some points based on how close it is to what the user wants, even if it's not a perfect match. So once a song doesn't match a user's genre or mood, those two drop out of the score entirely, and energy is the only thing left deciding the ranking. Since most genres and moods in this catalog only have one song each, most songs don't share a genre or mood with any given user — so energy ends up deciding most of the rankings by default, not because it's picked first, but because it's the only value still doing any work.
+
 Prompts:  
 
 - Features it does not consider  
@@ -75,6 +77,16 @@ Prompts:
 ## 7. Evaluation  
 
 How you checked whether the recommender behaved as expected. 
+
+One of the clearest examples was the **User A vs. User B test**: two profiles with completely opposite taste. User A wanted `jazz`/`relaxed` songs, User B wanted `metal`/`angry` songs, but both had the same energy target (0.4). I expected their recommendation lists to look totally different since their genre and mood preferences don't overlap at all. Instead, the surprising result was that 3 of their top 5 songs were identical (Focus Flow, Midnight Coding, Dust Road Home), songs that don't even match either user's genre or mood. They only showed up because their energy happened to sit close to 0.4. So instead of two very different playlists, the system gave two mostly overlapping ones, which wasn't the outcome I expected going in. It exposed how much energy alone can steer the results once genre and mood stop mattering.
+
+I also compared three other profiles (see README's Experiments section) two at a time to see what changed and why:
+
+- **Profile 1 vs Profile 2** — In Profile 1, Gym Hero got a mood match ("intense"), which was worth more points, so it scored 0.74. In Profile 2, Gym Hero only got a genre match ("pop") instead, which is worth fewer points, so it dropped to 0.56, even though its energy score stayed the same. This makes sense because mood matches were worth more than genre matches at the time.
+
+- **Profile 2 vs Profile 3** — Just lowering the target energy from 1.0 to 0.8 flipped the order of the top two songs. Sunrise City (energy 0.82) is now closer to 0.80 than Gym Hero (energy 0.93), so it moved into first place. The #3 song also changed, from Iron Verdict (energy 0.98, close to the old target) to Rooftop Lights (energy 0.76, close to the new target). This makes sense because energy score is just about how close a song is to the target, so moving the target changes which songs count as "close."
+
+- **Profile 1 vs Profile 3** — These two change genre, mood, and target energy all at once, so almost everything about the results changes. Profile 1's top song won on a mood match, Profile 3's top song won on a genre match instead. Even the bottom of the list looks totally different: Profile 1's bottom songs are lofi tracks that only got points for genre, while Profile 3's bottom songs are unrelated genres that only got points for having energy close to 0.80. This makes sense because changing all three inputs at once changes what's actually deciding the ranking.
 
 Prompts:  
 

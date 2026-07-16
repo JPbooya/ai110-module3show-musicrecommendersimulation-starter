@@ -118,11 +118,109 @@ Example run using the profile `{"genre": "pop", "mood": "happy", "energy": 0.8}`
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+Ran the recommender against three different user profiles to see how the ranking shifts:
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+**Profile 1**
+```
+==================================================
+ Top 5 Recommendations
+==================================================
+
+1. Gym Hero
+   Score: 0.74
+   Why:
+     - mood matches your favorite (intense)
+     - energy (0.93) is very close to your target (1.00)
+
+2. Storm Runner
+   Score: 0.73
+   Why:
+     - mood matches your favorite (intense)
+     - energy (0.91) is very close to your target (1.00)
+
+3. Midnight Coding
+   Score: 0.38
+   Why:
+     - genre matches your favorite (lofi)
+
+4. Focus Flow
+   Score: 0.38
+   Why:
+     - genre matches your favorite (lofi)
+
+5. Library Rain
+   Score: 0.36
+   Why:
+     - genre matches your favorite (lofi)
+```
+
+**Profile 2**
+```
+==================================================
+ Top 5 Recommendations
+==================================================
+
+1. Gym Hero
+   Score: 0.56
+   Why:
+     - genre matches your favorite (pop)
+     - energy (0.93) is very close to your target (1.00)
+
+2. Sunrise City
+   Score: 0.52
+   Why:
+     - genre matches your favorite (pop)
+     - energy (0.82) is reasonably close to your target (1.00)
+
+3. Iron Verdict
+   Score: 0.35
+   Why:
+     - energy (0.98) is very close to your target (1.00)
+
+4. Neon Pulse
+   Score: 0.34
+   Why:
+     - energy (0.97) is very close to your target (1.00)
+
+5. Storm Runner
+   Score: 0.32
+   Why:
+     - energy (0.91) is very close to your target (1.00)
+```
+
+**Profile 3**
+```
+==================================================
+ Top 5 Recommendations
+==================================================
+
+1. Sunrise City
+   Score: 0.58
+   Why:
+     - genre matches your favorite (pop)
+     - energy (0.82) is very close to your target (0.80)
+
+2. Gym Hero
+   Score: 0.54
+   Why:
+     - genre matches your favorite (pop)
+     - energy (0.93) is very close to your target (0.80)
+
+3. Rooftop Lights
+   Score: 0.34
+   Why:
+     - energy (0.76) is very close to your target (0.80)
+
+4. Night Drive Loop
+   Score: 0.34
+   Why:
+     - energy (0.75) is very close to your target (0.80)
+
+5. Concrete Dreams
+   Score: 0.34
+   Why:
+     - energy (0.85) is very close to your target (0.80)
+```
 
 ---
 
